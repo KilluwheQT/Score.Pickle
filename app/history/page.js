@@ -127,7 +127,7 @@ export default function HistoryPage() {
           <div className="grid gap-4">
             {filteredHistory.map((match, index) => (
               <div
-                key={match.id || index}
+                key={`${match.id || 'no-id'}-${index}`}
                 className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow`}
               >
                 <div className="flex justify-between items-start mb-4">
