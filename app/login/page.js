@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { signIn, setUserSession } from '../../lib/auth.js';
+import { useAuth } from '../../contexts/AuthContext.js';
 
 export default function LoginPage() {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -38,6 +40,7 @@ export default function LoginPage() {
 
     if (result.success) {
       setUserSession(result.user);
+      login(result.user); // Update AuthContext
       router.push('/');
     } else {
       setError(result.message);
