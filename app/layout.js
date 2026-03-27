@@ -13,8 +13,12 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Pickleball Scoring System",
-  description: "Real-time pickleball match scoring with live updates",
+  description: "Real-time pickleball match scoring with live update",
 };
+
+'use client';
+
+import { AuthProvider } from '../contexts/AuthContext.js';
 
 export default function RootLayout({ children }) {
   return (
@@ -23,7 +27,11 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="h-full">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }
