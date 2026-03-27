@@ -10,6 +10,7 @@ import MatchSetup from '../components/MatchSetup.js';
 function HomePage() {
   const { user, logout, isAdmin } = useAuth();
   const router = useRouter();
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -17,14 +18,14 @@ function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-50 to-purple-50'}`}>
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+      <nav className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-sm border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
               <Link href="/" className="flex-shrink-0 flex items-center">
-                <h1 className="text-2xl font-bold text-gray-900">🏓 Pickleball Scoring</h1>
+                <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>🏓 Pickleball Scoring</h1>
               </Link>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:pt-1">
                 <Link
@@ -35,7 +36,7 @@ function HomePage() {
                 </Link>
                 <Link
                   href="/history"
-                  className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
+                  className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-800'} px-3 py-2 rounded-md text-sm font-medium`}
                 >
                   History
                 </Link>
@@ -74,7 +75,13 @@ function HomePage() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-700">Welcome, {user?.name}</span>
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2 rounded-lg ${darkMode ? 'bg-gray-700 text-yellow-400' : 'bg-gray-100 text-gray-600'}`}
+              >
+                {darkMode ? '☀️' : '🌙'}
+              </button>
+              <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Welcome, {user?.name}</span>
               <button
                 onClick={handleLogout}
                 className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700"
@@ -90,16 +97,16 @@ function HomePage() {
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
               Welcome to Pickleball Scoring System
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Create and manage pickleball matches with real-time scoring
             </p>
           </div>
 
           {/* Match Setup */}
-          <MatchSetup />
+          <MatchSetup darkMode={darkMode} />
         </div>
       </main>
     </div>
