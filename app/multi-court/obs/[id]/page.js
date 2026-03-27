@@ -7,7 +7,6 @@ import { subscribeToMatch } from '../../../lib/realtime.js';
 export default function MultiCourtOBSPage() {
   const params = useParams();
   const courtIds = params.id.split(',').map(id => id.trim().toUpperCase());
-  const [darkMode, setDarkMode] = useState(false);
   
   const [courts, setCourts] = useState(
     courtIds.map((courtId, index) => ({
@@ -78,19 +77,13 @@ export default function MultiCourtOBSPage() {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-black'} text-white p-4`}>
+    <div className="min-h-screen bg-black text-white p-4">
       {/* Header */}
-      <div className={`${darkMode ? 'bg-gray-800' : 'bg-gray-800'} p-4 rounded-t-lg`}>
+      <div className="bg-gray-800 p-4 rounded-t-lg">
         <h1 className="text-2xl font-bold text-center">🏓 Multi-Court Monitor</h1>
         <p className="text-center text-sm text-gray-400">
           Courts: {courtIds.join(' • ')}
         </p>
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className={`mt-2 px-3 py-1 rounded ${darkMode ? 'bg-gray-700 text-yellow-400' : 'bg-gray-700 text-gray-300'}`}
-        >
-          {darkMode ? '☀️' : '🌙'}
-        </button>
       </div>
 
       {/* Courts Grid */}
@@ -100,7 +93,7 @@ export default function MultiCourtOBSPage() {
           const status = getMatchStatus(court.match);
           
           return (
-            <div key={court.id} className={`${darkMode ? 'bg-gray-800' : 'bg-gray-900'} rounded-lg p-4`}>
+            <div key={court.id} className="bg-gray-900 rounded-lg p-4">
               {/* Court Header */}
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-bold">{court.name}</h2>
@@ -110,7 +103,7 @@ export default function MultiCourtOBSPage() {
               </div>
 
               {/* Match ID */}
-              <div className={`text-center text-xs ${darkMode ? 'text-gray-400' : 'text-gray-400'} mb-3`}>
+              <div className="text-center text-xs text-gray-400 mb-3">
                 Match: {court.id}
               </div>
 
@@ -121,12 +114,8 @@ export default function MultiCourtOBSPage() {
                   <div className="space-y-2">
                     <div className={`p-2 rounded text-sm ${
                       score.servingA 
-                        ? darkMode 
-                          ? 'bg-blue-600 text-white' 
-                          : 'bg-blue-600 text-white'
-                        : darkMode 
-                          ? 'bg-gray-700 text-gray-300'
-                          : 'bg-gray-700 text-gray-300'
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-gray-700 text-gray-300'
                     }`}>
                       <div className="flex justify-between items-center">
                         <span className="truncate">{court.match.teamA?.name || 'Team A'}</span>
@@ -136,12 +125,8 @@ export default function MultiCourtOBSPage() {
                     
                     <div className={`p-2 rounded text-sm ${
                       score.servingB 
-                        ? darkMode 
-                          ? 'bg-green-600 text-white' 
-                          : 'bg-green-600 text-white'
-                        : darkMode 
-                          ? 'bg-gray-700 text-gray-300'
-                          : 'bg-gray-700 text-gray-300'
+                        ? 'bg-green-600 text-white' 
+                        : 'bg-gray-700 text-gray-300'
                     }`}>
                       <div className="flex justify-between items-center">
                         <span className="truncate">{court.match.teamB?.name || 'Team B'}</span>
@@ -173,10 +158,10 @@ export default function MultiCourtOBSPage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <div className={`text-gray-500 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <div className="text-gray-500">
                     <div className={`mb-2 ${courts.length <= 4 ? 'text-4xl' : courts.length <= 8 ? 'text-3xl' : 'text-2xl'}`}>🏓</div>
-                    <p className={`text-sm ${darkMode ? 'text-gray-500' : 'text-gray-500'} ${courts.length <= 8 ? '' : 'text-xs'}`}>Waiting for match</p>
-                    <p className={`text-xs mt-1 ${darkMode ? 'text-gray-600' : 'text-gray-600'}`}>ID: {court.id}</p>
+                    <p className={`text-sm ${courts.length <= 8 ? '' : 'text-xs'}`}>Waiting for match</p>
+                    <p className="text-xs mt-1">ID: {court.id}</p>
                   </div>
                 </div>
               )}
@@ -186,9 +171,9 @@ export default function MultiCourtOBSPage() {
       </div>
 
       {/* Footer */}
-      <div className={`${darkMode ? 'bg-gray-800' : 'bg-gray-800'} p-2 rounded-b-lg`}>
-        <div className="text-center text-xs text-gray-500">
-          Multi-Court OBS View • Courts: {courtIds.join(' • ')}
+      <div className="bg-gray-800 p-2 rounded-b-lg">
+        <div className="text-center text-xs text-gray-400">
+          Live Multi-Court Monitor • {courts.length} Courts • Last updated: {new Date().toLocaleTimeString()}
         </div>
       </div>
     </div>
