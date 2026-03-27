@@ -25,6 +25,12 @@ export default function Home() {
                 History
               </Link>
               <Link
+                href="/multi-court"
+                className="text-orange-600 hover:text-orange-800 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                Multi-Court
+              </Link>
+              <Link
                 href="/league"
                 className="text-purple-600 hover:text-purple-800 px-3 py-2 rounded-md text-sm font-medium"
               >
