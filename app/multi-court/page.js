@@ -110,8 +110,8 @@ export default function MultiCourtPage() {
       <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg p-6 mb-6`}>
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">🏓 Multi-Court Monitor</h1>
-            <p className="text-gray-600 mt-1">Monitor and score {courtCount} court{courtCount !== 1 ? 's' : ''} simultaneously</p>
+            <h1 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>🏓 Multi-Court Monitor</h1>
+            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'} mt-1`}>Monitor and score {courtCount} court{courtCount !== 1 ? 's' : ''} simultaneously</p>
           </div>
           <div className="flex gap-2">
             <button
@@ -139,10 +139,10 @@ export default function MultiCourtPage() {
       {/* Settings Panel */}
       {showSettings && (
         <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg p-6 mb-6`}>
-          <h3 className="text-lg font-bold mb-4">Settings</h3>
+          <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>Settings</h3>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Number of Courts</label>
+              <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Number of Courts</label>
               <div className="flex items-center gap-4">
                 <input
                   type="range"
@@ -152,11 +152,9 @@ export default function MultiCourtPage() {
                   onChange={(e) => setCourtCount(parseInt(e.target.value))}
                   className="flex-1"
                 />
-                <span className="text-xl font-bold w-12 text-center">{courtCount}</span>
+                <span className={`text-xl font-bold w-12 text-center ${darkMode ? 'text-white' : 'text-gray-800'}`}>{courtCount}</span>
               </div>
-              <div className="text-sm text-gray-600 mt-1">
-                Choose between 1-12 courts
-              </div>
+              <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Choose between 1-12 courts</div>
             </div>
             
             <label className="flex items-center">
@@ -166,10 +164,10 @@ export default function MultiCourtPage() {
                 onChange={(e) => setAutoRefresh(e.target.checked)}
                 className="mr-2"
               />
-              Auto-refresh matches
+              <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Auto-refresh matches</span>
             </label>
             
-            <div className="text-sm text-gray-600">
+            <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               Enter match IDs for each court to monitor live games
             </div>
           </div>
@@ -202,86 +200,82 @@ export default function MultiCourtPage() {
                     placeholder="Enter Match ID"
                     className={`flex-1 px-3 py-2 rounded border ${
                       darkMode 
-                        ? 'bg-gray-600 border-gray-500 text-white' 
+                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
                         : 'bg-white border-gray-300'
-                    } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                    }`}
                   />
                   <button
-                    onClick={() => clearCourt(index)}
-                    className={`px-3 py-2 rounded ${
+                    onClick={() => updateCourtMatchId(index, '')}
+                    className={`px-3 py-2 text-sm font-medium rounded ${
                       darkMode 
-                        ? 'bg-red-600 hover:bg-red-700 text-white' 
-                        : 'bg-red-500 hover:bg-red-600 text-white'
-                    } transition-colors`}
+                        ? 'bg-gray-600 text-white hover:bg-gray-500' 
+                        : 'bg-blue-500 text-white hover:bg-blue-600'
+                    }`}
                   >
                     Clear
                   </button>
                 </div>
               </div>
+            </div>
 
-              {/* Score Display */}
-              <div className="p-6">
-                {court.match ? (
-                  <div className="space-y-4">
-                    {/* Team Names */}
-                    <div className="space-y-3">
-                      <div className={`p-3 rounded-lg ${
-                        score.servingA 
-                          ? 'bg-blue-500 text-white' 
-                          : darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium truncate">{court.match.teamA?.name || 'Team A'}</span>
-                          {score.servingA && <span className="text-sm animate-pulse">🏓</span>}
-                        </div>
-                      </div>
-                      
-                      <div className={`p-3 rounded-lg ${
-                        score.servingB 
-                          ? 'bg-green-500 text-white' 
-                          : darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium truncate">{court.match.teamB?.name || 'Team B'}</span>
-                          {score.servingB && <span className="text-sm animate-pulse">🏓</span>}
-                        </div>
-                      </div>
-                    </div>
+            {/* Match ID */}
+            <div className={`text-center text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-3`}>
+              Match: {court.matchId || 'Not Set'}
+            </div>
 
-                    {/* Score */}
-                    <div className="text-center py-4">
-                      <div className="text-5xl font-bold">
-                        {score.teamA} - {score.teamB}
-                      </div>
-                    </div>
-
-                    {/* Match Info */}
-                    <div className="text-center text-sm text-gray-500">
-                      Game {court.match.currentGame || 1} • {court.match.matchType || 'Singles'}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-2 mt-4">
-                      <button
-                        onClick={() => window.open(`/match/${court.matchId}`, '_blank')}
-                        className="flex-1 px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
-                      >
-                        Score
-                      </button>
-                      <button
-                        onClick={() => window.open(`/league/${court.matchId}`, '_blank')}
-                        className="flex-1 px-3 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
-                      >
-                        League
-                      </button>
+            {/* Score Display */}
+            {court.match ? (
+              <div className="space-y-3">
+                {/* Team Names */}
+                <div className="space-y-2">
+                  <div className={`p-2 rounded text-sm ${
+                    score.servingA 
+                      ? darkMode 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-blue-600 text-white'
+                      : darkMode 
+                        ? 'bg-gray-700 text-gray-300'
+                        : 'bg-gray-700 text-gray-300'
+                  }`}>
+                    <div className="flex justify-between items-center">
+                      <span className="truncate">{court.match.teamA?.name || 'Team A'}</span>
+                      {score.servingA && <span className="text-xs animate-pulse">🏓</span>}
                     </div>
                   </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <div className="text-gray-400 mb-4">
-                      <div className="text-6xl mb-2">🏓</div>
-                      <p>No match assigned</p>
-                      <p className="text-sm mt-2">Enter a Match ID to monitor this court</p>
+                  
+                  <div className={`p-2 rounded text-sm ${
+                    score.servingB 
+                      ? darkMode 
+                        ? 'bg-green-600 text-white' 
+                        : 'bg-green-600 text-white'
+                      : darkMode 
+                        ? 'bg-gray-700 text-gray-300'
+                        : 'bg-gray-700 text-gray-300'
+                  }`}>
+                    <div className="flex justify-between items-center">
+                      <span className="truncate">{court.match.teamB?.name || 'Team B'}</span>
+                      {score.servingB && <span className="text-xs animate-pulse">🏓</span>}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Score */}
+                <div className="text-center py-3">
+                  <div className={`font-bold ${courts.length <= 4 ? 'text-3xl' : courts.length <= 8 ? 'text-2xl' : 'text-xl'}`}>
+                    {score.teamA} - {score.teamB}
+                  </div>
+                </div>
+
+                {/* Match Info */}
+                <div className={`text-center text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  Game {court.match.currentGame || 1} • {court.match.matchType || 'Singles'}
+                </div>
+
+                {/* Progress Indicator */}
+                {court.match.games && court.match.games.length > 0 && (
+                  <div className="mt-3 text-center">
+                    <div className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                      Games: {court.match.teamA?.name} {court.match.games.filter(g => g.winner === 'A').length} - {court.match.games.filter(g => g.winner === 'B').length} {court.match.teamB?.name}
                     </div>
                   </div>
                 )}
@@ -293,7 +287,7 @@ export default function MultiCourtPage() {
 
       {/* Quick Actions */}
       <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg p-6 mt-6`}>
-        <h3 className="text-lg font-bold mb-4">Quick Actions</h3>
+        <h3 className={`text-lg font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>Quick Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <button
             onClick={() => window.open('/', '_blank')}
@@ -303,18 +297,10 @@ export default function MultiCourtPage() {
           </button>
           <button
             onClick={() => window.open('/history', '_blank')}
-            className="px-4 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+            className={`px-4 py-3 ${darkMode ? 'bg-gray-700 text-white hover:bg-gray-500' : 'bg-gray-700 text-white hover:bg-gray-600'} rounded-lg transition-colors`}
           >
             View History
           </button>
-          <button
-            onClick={() => {
-              const courtIds = courts.filter(c => c.matchId).map(c => c.matchId).join(',');
-              if (courtIds) {
-                window.open(`/multi-court/obs/${courtIds}`, '_blank');
-              } else {
-                alert('Please add match IDs to courts first');
-              }
             }}
             className="px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
           >
