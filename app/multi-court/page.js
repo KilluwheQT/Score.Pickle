@@ -218,11 +218,6 @@ export default function MultiCourtPage() {
               </div>
             </div>
 
-            {/* Match ID */}
-            <div className={`text-center text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} mb-3`}>
-              Match: {court.matchId || 'Not Set'}
-            </div>
-
             {/* Score Display */}
             {court.match ? (
               <div className="space-y-3">
@@ -268,7 +263,7 @@ export default function MultiCourtPage() {
 
                 {/* Match Info */}
                 <div className={`text-center text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                  Game {court.match.currentGame || 1} • {court.match.matchType || 'Singles'}
+                  Game {court.match.currentGame || 1} 
                 </div>
 
                 {/* Progress Indicator */}
