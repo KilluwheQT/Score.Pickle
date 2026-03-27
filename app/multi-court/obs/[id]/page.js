@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { subscribeToMatch } from '../../../lib/realtime.js';
+import { subscribeToMatch } from '../../../lib/realtime';
 
 export default function MultiCourtOBSPage() {
   const params = useParams();

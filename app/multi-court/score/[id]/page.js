@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { subscribeToMatch, updateMatchScore } from '../../../lib/realtime.js';
+import { subscribeToMatch, updateMatchScore } from '../../../lib/realtime';
 
 export default function MultiCourtScorePage() {
   const params = useParams();
