@@ -1,5 +1,8 @@
+'use client';
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from '../contexts/AuthContext.js';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +18,6 @@ export const metadata = {
   title: "Pickleball Scoring System",
   description: "Real-time pickleball match scoring with live update",
 };
-
-'use client';
-
-import { AuthProvider } from '../contexts/AuthContext.js';
 
 export default function RootLayout({ children }) {
   return (
