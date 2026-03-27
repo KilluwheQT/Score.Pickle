@@ -4,14 +4,22 @@ import { useState, useEffect } from 'react';
 import { subscribeToMatch } from '../../lib/realtime.js';
 
 export default function MultiCourtPage() {
-  const [courts, setCourts] = useState([
-    { id: 'COURT1', name: 'Court 1', matchId: '', match: null },
-    { id: 'COURT2', name: 'Court 2', matchId: '', match: null },
-    { id: 'COURT3', name: 'Court 3', matchId: '', match: null }
-  ]);
+  const [courtCount, setCourtCount] = useState(3);
+  const [courts, setCourts] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(true);
+
+  // Initialize courts when court count changes
+  useEffect(() => {
+    const newCourts = Array.from({ length: courtCount }, (_, index) => ({
+      id: `COURT${index + 1}`,
+      name: `Court ${index + 1}`,
+      matchId: '',
+      match: null
+    }));
+    setCourts(newCourts);
+  }, [courtCount]);
 
   // Subscribe to matches for each court
   useEffect(() => {
@@ -20,7 +28,9 @@ export default function MultiCourtPage() {
         return subscribeToMatch(court.matchId, (data) => {
           setCourts(prev => {
             const newCourts = [...prev];
-            newCourts[index].match = data;
+            if (newCourts[index]) {
+              newCourts[index].match = data;
+            }
             return newCourts;
           });
         });
@@ -38,8 +48,10 @@ export default function MultiCourtPage() {
   const updateCourtMatchId = (courtIndex, matchId) => {
     setCourts(prev => {
       const newCourts = [...prev];
-      newCourts[courtIndex].matchId = matchId.toUpperCase();
-      newCourts[courtIndex].match = null; // Reset match data
+      if (newCourts[courtIndex]) {
+        newCourts[courtIndex].matchId = matchId.toUpperCase();
+        newCourts[courtIndex].match = null; // Reset match data
+      }
       return newCourts;
     });
   };
@@ -47,8 +59,10 @@ export default function MultiCourtPage() {
   const clearCourt = (courtIndex) => {
     setCourts(prev => {
       const newCourts = [...prev];
-      newCourts[courtIndex].matchId = '';
-      newCourts[courtIndex].match = null;
+      if (newCourts[courtIndex]) {
+        newCourts[courtIndex].matchId = '';
+        newCourts[courtIndex].match = null;
+      }
       return newCourts;
     });
   };
@@ -80,6 +94,16 @@ export default function MultiCourtPage() {
     }
   };
 
+  // Get grid class based on court count
+  const getGridClass = () => {
+    if (courtCount === 1) return 'grid-cols-1';
+    if (courtCount === 2) return 'grid-cols-1 md:grid-cols-2';
+    if (courtCount === 3) return 'grid-cols-1 lg:grid-cols-3';
+    if (courtCount === 4) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
+    if (courtCount <= 6) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+    return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+  };
+
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'} p-4`}>
       {/* Header */}
@@ -87,7 +111,7 @@ export default function MultiCourtPage() {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">🏓 Multi-Court Monitor</h1>
-            <p className="text-gray-600 mt-1">Monitor and score up to 3 courts simultaneously</p>
+            <p className="text-gray-600 mt-1">Monitor and score {courtCount} court{courtCount !== 1 ? 's' : ''} simultaneously</p>
           </div>
           <div className="flex gap-2">
             <button
@@ -116,7 +140,25 @@ export default function MultiCourtPage() {
       {showSettings && (
         <div className={`${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-lg p-6 mb-6`}>
           <h3 className="text-lg font-bold mb-4">Settings</h3>
-          <div className="space-y-3">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Number of Courts</label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="range"
+                  min="1"
+                  max="12"
+                  value={courtCount}
+                  onChange={(e) => setCourtCount(parseInt(e.target.value))}
+                  className="flex-1"
+                />
+                <span className="text-xl font-bold w-12 text-center">{courtCount}</span>
+              </div>
+              <div className="text-sm text-gray-600 mt-1">
+                Choose between 1-12 courts
+              </div>
+            </div>
+            
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -126,6 +168,7 @@ export default function MultiCourtPage() {
               />
               Auto-refresh matches
             </label>
+            
             <div className="text-sm text-gray-600">
               Enter match IDs for each court to monitor live games
             </div>
@@ -134,7 +177,7 @@ export default function MultiCourtPage() {
       )}
 
       {/* Courts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className={`grid ${getGridClass()} gap-6`}>
         {courts.map((court, index) => {
           const score = getScoreDisplay(court.match);
           const status = getMatchStatus(court.match);
@@ -188,7 +231,7 @@ export default function MultiCourtPage() {
                           : darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'
                       }`}>
                         <div className="flex justify-between items-center">
-                          <span className="font-medium">{court.match.teamA?.name || 'Team A'}</span>
+                          <span className="font-medium truncate">{court.match.teamA?.name || 'Team A'}</span>
                           {score.servingA && <span className="text-sm animate-pulse">🏓</span>}
                         </div>
                       </div>
@@ -199,7 +242,7 @@ export default function MultiCourtPage() {
                           : darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800'
                       }`}>
                         <div className="flex justify-between items-center">
-                          <span className="font-medium">{court.match.teamB?.name || 'Team B'}</span>
+                          <span className="font-medium truncate">{court.match.teamB?.name || 'Team B'}</span>
                           {score.servingB && <span className="text-sm animate-pulse">🏓</span>}
                         </div>
                       </div>
@@ -221,15 +264,15 @@ export default function MultiCourtPage() {
                     <div className="flex gap-2 mt-4">
                       <button
                         onClick={() => window.open(`/match/${court.matchId}`, '_blank')}
-                        className="flex-1 px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                        className="flex-1 px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
                       >
                         Score
                       </button>
                       <button
                         onClick={() => window.open(`/league/${court.matchId}`, '_blank')}
-                        className="flex-1 px-3 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors"
+                        className="flex-1 px-3 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
                       >
-                        League View
+                        League
                       </button>
                     </div>
                   </div>
@@ -265,10 +308,17 @@ export default function MultiCourtPage() {
             View History
           </button>
           <button
-            onClick={() => window.open('/live/demo', '_blank')}
+            onClick={() => {
+              const courtIds = courts.filter(c => c.matchId).map(c => c.matchId).join(',');
+              if (courtIds) {
+                window.open(`/multi-court/obs/${courtIds}`, '_blank');
+              } else {
+                alert('Please add match IDs to courts first');
+              }
+            }}
             className="px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
           >
-            OBS Setup
+            OBS View
           </button>
         </div>
       </div>

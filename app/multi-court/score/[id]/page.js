@@ -13,8 +13,7 @@ export default function MultiCourtScorePage() {
       id: courtId,
       name: `Court ${index + 1}`,
       match: null,
-      loading: true,
-      activeCourt: index === 0 // First court is active by default
+      loading: true
     }))
   );
 
@@ -124,6 +123,24 @@ export default function MultiCourtScorePage() {
 
   const activeCourt = courts[activeCourtIndex];
 
+  // Get grid class for court selector
+  const getGridClass = () => {
+    const courtCount = courts.length;
+    if (courtCount <= 2) return 'grid-cols-1 md:grid-cols-2';
+    if (courtCount <= 4) return 'grid-cols-2 lg:grid-cols-4';
+    if (courtCount <= 6) return 'grid-cols-2 lg:grid-cols-3';
+    if (courtCount <= 8) return 'grid-cols-2 lg:grid-cols-4';
+    return 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+  };
+
+  // Get grid class for other courts overview
+  const getOverviewGridClass = () => {
+    const otherCourtsCount = courts.length - 1;
+    if (otherCourtsCount <= 2) return 'grid-cols-1 md:grid-cols-2';
+    if (otherCourtsCount <= 4) return 'grid-cols-2';
+    return 'grid-cols-2 lg:grid-cols-3';
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       {/* Header */}
@@ -136,7 +153,7 @@ export default function MultiCourtScorePage() {
 
       {/* Court Selector */}
       <div className="bg-gray-800 p-4 border-b border-gray-700">
-        <div className="grid grid-cols-3 gap-4">
+        <div className={`grid ${getGridClass()} gap-2`}>
           {courts.map((court, index) => (
             <button
               key={court.id}
@@ -150,7 +167,7 @@ export default function MultiCourtScorePage() {
               <div>{court.name}</div>
               <div className="text-xs opacity-75">{court.id}</div>
               {court.match && (
-                <div className="text-xs mt-1">
+                <div className="text-xs mt-1 truncate">
                   {court.match.teamA?.name} vs {court.match.teamB?.name}
                 </div>
               )}
@@ -162,7 +179,7 @@ export default function MultiCourtScorePage() {
       {/* Active Court Scoring */}
       <div className="bg-gray-900 p-6">
         {activeCourt?.match ? (
-          <div className="max-w-md mx-auto">
+          <div className={`max-w-md mx-auto ${courts.length > 6 ? 'max-w-sm' : ''}`}>
             {/* Team Names */}
             <div className="space-y-4 mb-6">
               <div className={`p-4 rounded-lg text-center ${
@@ -170,7 +187,9 @@ export default function MultiCourtScorePage() {
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-700 text-gray-300'
               }`}>
-                <div className="text-xl font-bold mb-2">{activeCourt.match.teamA?.name || 'Team A'}</div>
+                <div className={`font-bold mb-2 ${courts.length > 8 ? 'text-lg' : 'text-xl'}`}>
+                  {activeCourt.match.teamA?.name || 'Team A'}
+                </div>
                 {activeCourt.match.teamA.serving && (
                   <div className="animate-pulse">🏓 SERVING</div>
                 )}
@@ -181,7 +200,9 @@ export default function MultiCourtScorePage() {
                   ? 'bg-green-600 text-white' 
                   : 'bg-gray-700 text-gray-300'
               }`}>
-                <div className="text-xl font-bold mb-2">{activeCourt.match.teamB?.name || 'Team B'}</div>
+                <div className={`font-bold mb-2 ${courts.length > 8 ? 'text-lg' : 'text-xl'}`}>
+                  {activeCourt.match.teamB?.name || 'Team B'}
+                </div>
                 {activeCourt.match.teamB.serving && (
                   <div className="animate-pulse">🏓 SERVING</div>
                 )}
@@ -190,7 +211,7 @@ export default function MultiCourtScorePage() {
 
             {/* Score Display */}
             <div className="text-center mb-6">
-              <div className="text-6xl font-bold">
+              <div className={`font-bold ${courts.length > 8 ? 'text-4xl' : 'text-6xl'}`}>
                 {activeCourt.match.teamA.score} - {activeCourt.match.teamB.score}
               </div>
               <div className="text-sm text-gray-400 mt-2">
@@ -253,27 +274,29 @@ export default function MultiCourtScorePage() {
       </div>
 
       {/* Other Courts Overview */}
-      <div className="bg-gray-800 p-4 rounded-b-lg">
-        <h3 className="text-sm font-bold mb-3">Other Courts</h3>
-        <div className="grid grid-cols-2 gap-4">
-          {courts.filter((_, index) => index !== activeCourtIndex).map((court) => (
-            <div key={court.id} className="bg-gray-700 p-3 rounded">
-              <div className="flex justify-between items-center">
-                <span className="font-medium">{court.name}</span>
-                <span className="text-xs text-gray-400">{court.id}</span>
-              </div>
-              {court.match && (
-                <div className="mt-2 text-sm">
-                  <div>{court.match.teamA?.name} vs {court.match.teamB?.name}</div>
-                  <div className="text-gray-400">
-                    Score: {court.match.teamA.score} - {court.match.teamB.score}
-                  </div>
+      {courts.length > 1 && (
+        <div className="bg-gray-800 p-4 rounded-b-lg">
+          <h3 className="text-sm font-bold mb-3">Other Courts</h3>
+          <div className={`grid ${getOverviewGridClass()} gap-3`}>
+            {courts.filter((_, index) => index !== activeCourtIndex).map((court) => (
+              <div key={court.id} className="bg-gray-700 p-3 rounded">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">{court.name}</span>
+                  <span className="text-xs text-gray-400">{court.id}</span>
                 </div>
-              )}
-            </div>
-          ))}
+                {court.match && (
+                  <div className="mt-2 text-sm">
+                    <div className="truncate">{court.match.teamA?.name} vs {court.match.teamB?.name}</div>
+                    <div className="text-gray-400">
+                      Score: {court.match.teamA.score} - {court.match.teamB.score}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

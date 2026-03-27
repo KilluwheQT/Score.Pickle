@@ -64,6 +64,18 @@ export default function MultiCourtOBSPage() {
     }
   };
 
+  // Get grid class based on court count
+  const getGridClass = () => {
+    const courtCount = courts.length;
+    if (courtCount === 1) return 'grid-cols-1';
+    if (courtCount === 2) return 'grid-cols-1 md:grid-cols-2';
+    if (courtCount === 3) return 'grid-cols-1 lg:grid-cols-3';
+    if (courtCount === 4) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
+    if (courtCount <= 6) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+    if (courtCount <= 8) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
+    return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+  };
+
   return (
     <div className="min-h-screen bg-black text-white p-4">
       {/* Header */}
@@ -75,7 +87,7 @@ export default function MultiCourtOBSPage() {
       </div>
 
       {/* Courts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
+      <div className={`grid ${getGridClass()} gap-4 p-4`}>
         {courts.map((court, index) => {
           const score = getScoreDisplay(court.match);
           const status = getMatchStatus(court.match);
@@ -125,7 +137,7 @@ export default function MultiCourtOBSPage() {
 
                   {/* Score */}
                   <div className="text-center py-3">
-                    <div className="text-3xl font-bold">
+                    <div className={`font-bold ${courts.length <= 4 ? 'text-3xl' : courts.length <= 8 ? 'text-2xl' : 'text-xl'}`}>
                       {score.teamA} - {score.teamB}
                     </div>
                   </div>
@@ -147,8 +159,8 @@ export default function MultiCourtOBSPage() {
               ) : (
                 <div className="text-center py-8">
                   <div className="text-gray-500">
-                    <div className="text-4xl mb-2">🏓</div>
-                    <p className="text-sm">Waiting for match</p>
+                    <div className={`mb-2 ${courts.length <= 4 ? 'text-4xl' : courts.length <= 8 ? 'text-3xl' : 'text-2xl'}`}>🏓</div>
+                    <p className={`text-sm ${courts.length <= 8 ? '' : 'text-xs'}`}>Waiting for match</p>
                     <p className="text-xs mt-1">ID: {court.id}</p>
                   </div>
                 </div>
@@ -161,7 +173,7 @@ export default function MultiCourtOBSPage() {
       {/* Footer */}
       <div className="bg-gray-800 p-2 rounded-b-lg">
         <div className="text-center text-xs text-gray-400">
-          Live Multi-Court Monitor • Last updated: {new Date().toLocaleTimeString()}
+          Live Multi-Court Monitor • {courts.length} Courts • Last updated: {new Date().toLocaleTimeString()}
         </div>
       </div>
     </div>
