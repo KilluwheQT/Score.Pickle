@@ -1,8 +1,6 @@
-'use client';
-
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from '../contexts/AuthContext.js';
+import AuthProviderWrapper from '../components/AuthProvider.js';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +25,9 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="h-full">
-        <AuthProvider>
+        <AuthProviderWrapper>
           {children}
-        </AuthProvider>
+        </AuthProviderWrapper>
       </body>
     </html>
   );
