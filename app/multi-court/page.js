@@ -218,7 +218,7 @@ export default function MultiCourtPage() {
               </div>
             </div>
 
-            {court.match ? (
+            {court.match && (
               <div className="space-y-3">
                 {/* Team Names */}
                 <div className="space-y-2">
@@ -274,7 +274,15 @@ export default function MultiCourtPage() {
                   </div>
                 )}
               </div>
-            </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className={`${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <div className={`mb-2 ${courts.length <= 4 ? 'text-3xl' : courts.length <= 8 ? 'text-3xl' : 'text-2xl'}`}>🏓</div>
+                  <p className={`text-sm ${darkMode ? 'text-gray-500' : 'text-gray-500'} ${courts.length <= 8 ? '' : 'text-xs'}`}>Waiting for match</p>
+                  <p className={`text-xs mt-1 ${darkMode ? 'text-gray-600' : 'text-gray-600'}`}>ID: {court.id}</p>
+                </div>
+              </div>
+            )}
           );
         })}
       </div>
