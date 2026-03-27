@@ -8,7 +8,7 @@ export default function CourtCard({ court, user }) {
 
   const getStatusColor = () => {
     if (!isActive) return 'border-gray-600';
-    if (hasActiveMatch) return 'border-green-500 shadow-green-500/30';
+    if (hasActiveMatch) return 'border-purple-500 shadow-purple-500/30';
     return 'border-yellow-500 shadow-yellow-500/30';
   };
 
@@ -20,7 +20,7 @@ export default function CourtCard({ court, user }) {
 
   const getStatusBg = () => {
     if (!isActive) return 'bg-gray-600';
-    if (hasActiveMatch) return 'bg-green-500';
+    if (hasActiveMatch) return 'bg-purple-500';
     return 'bg-yellow-500';
   };
 
@@ -46,10 +46,10 @@ export default function CourtCard({ court, user }) {
               <div className="text-center">
                 <p className="text-sm text-gray-400 mb-1">Team A</p>
                 <p className="text-lg font-bold text-white">{court.currentMatch.teamA.name}</p>
-                <div className={`text-3xl font-bold mt-2 ${court.currentMatch.teamA.serving ? 'text-green-400' : 'text-gray-500'}`}>
+                <div className={`text-3xl font-bold mt-2 ${court.currentMatch.teamA.serving ? 'text-purple-400' : 'text-gray-500'}`}>
                   {court.currentMatch.teamA.score}
                   {court.currentMatch.teamA.serving && (
-                    <div className="text-xs text-green-400 mt-1">🏓 Serving</div>
+                    <div className="text-xs text-purple-400 mt-1">🏓 Serving</div>
                   )}
                 </div>
               </div>
@@ -57,10 +57,10 @@ export default function CourtCard({ court, user }) {
               <div className="text-center">
                 <p className="text-sm text-gray-400 mb-1">Team B</p>
                 <p className="text-lg font-bold text-white">{court.currentMatch.teamB.name}</p>
-                <div className={`text-3xl font-bold mt-2 ${court.currentMatch.teamB.serving ? 'text-green-400' : 'text-gray-500'}`}>
+                <div className={`text-3xl font-bold mt-2 ${court.currentMatch.teamB.serving ? 'text-purple-400' : 'text-gray-500'}`}>
                   {court.currentMatch.teamB.score}
                   {court.currentMatch.teamB.serving && (
-                    <div className="text-xs text-green-400 mt-1">🏓 Serving</div>
+                    <div className="text-xs text-purple-400 mt-1">🏓 Serving</div>
                   )}
                 </div>
               </div>
@@ -78,7 +78,7 @@ export default function CourtCard({ court, user }) {
 
           {/* Action Button */}
           <Link href={`/court/${court.id}`}>
-            <button className="w-full bg-green-500 text-black py-3 rounded-lg font-bold hover:bg-green-400 transition-all transform hover:scale-105 shadow-lg shadow-green-500/30">
+            <button className="w-full bg-purple-500 text-white py-3 rounded-lg font-bold hover:bg-purple-400 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30">
               {court.currentMatch.winner ? 'View Match' : 'Join Match'}
             </button>
           </Link>

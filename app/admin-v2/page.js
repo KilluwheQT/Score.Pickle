@@ -70,17 +70,17 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="bg-gray-900 border-b border-green-500">
+      <nav className="bg-gray-900 border-b border-purple-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link href="/dashboard" className="flex-shrink-0 flex items-center">
-                <h1 className="text-2xl font-bold text-green-400">🏓 Pickleball Pro</h1>
+                <h1 className="text-2xl font-bold text-purple-400">🏓 Pickleball Pro</h1>
               </Link>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:pt-1">
                 <Link
                   href="/dashboard"
-                  className="text-green-400 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-purple-400 hover:text-purple-300 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Dashboard
                 </Link>
@@ -116,10 +116,10 @@ export default function AdminPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-            <div className="bg-gray-900 border border-green-500 rounded-xl p-6 shadow-lg shadow-green-500/20">
+            <div className="bg-gray-900 border border-purple-500 rounded-xl p-6 shadow-lg shadow-purple-500/20">
               <div className="text-center">
                 <p className="text-sm text-gray-400">Total Users</p>
-                <p className="text-2xl font-bold text-green-400">{stats.total}</p>
+                <p className="text-2xl font-bold text-purple-400">{stats.total}</p>
               </div>
             </div>
 

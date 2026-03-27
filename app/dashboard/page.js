@@ -71,17 +71,17 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="bg-gray-900 border-b border-green-500">
+      <nav className="bg-gray-900 border-b border-purple-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link href="/dashboard" className="flex-shrink-0 flex items-center">
-                <h1 className="text-2xl font-bold text-green-400">🏓 Pickleball Pro</h1>
+                <h1 className="text-2xl font-bold text-purple-400">🏓 Pickleball Pro</h1>
               </Link>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:pt-1">
                 <Link
                   href="/dashboard"
-                  className="text-green-400 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-purple-400 hover:text-purple-300 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Dashboard
                 </Link>
@@ -113,16 +113,16 @@ export default function DashboardPage() {
         <div className="px-4 py-6 sm:px-0">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-gray-900 border border-green-500 rounded-xl p-6 shadow-lg shadow-green-500/20">
+            <div className="bg-gray-900 border border-purple-500 rounded-xl p-6 shadow-lg shadow-purple-500/20">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
                     <span className="text-black font-bold">🏟️</span>
                   </div>
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-gray-400">Total Courts</p>
-                  <p className="text-2xl font-bold text-green-400">{totalCourts}</p>
+                  <p className="text-2xl font-bold text-purple-400">{totalCourts}</p>
                 </div>
               </div>
             </div>
@@ -141,16 +141,16 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-gray-900 border border-blue-500 rounded-xl p-6 shadow-lg shadow-blue-500/20">
+            <div className="bg-gray-900 border border-purple-500 rounded-xl p-6 shadow-lg shadow-purple-500/20">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
                     <span className="text-black font-bold">👥</span>
                   </div>
                 </div>
                 <div className="ml-4">
                   <p className="text-sm text-gray-400">Your Role</p>
-                  <p className="text-2xl font-bold text-blue-400 capitalize">{user?.role}</p>
+                  <p className="text-2xl font-bold text-purple-400 capitalize">{user?.role}</p>
                 </div>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function DashboardPage() {
             {isAdmin && (
               <button
                 onClick={() => setShowCreateCourt(true)}
-                className="bg-green-500 text-black px-6 py-3 rounded-lg font-bold hover:bg-green-400 transition-all transform hover:scale-105 shadow-lg shadow-green-500/30"
+                className="bg-purple-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-purple-400 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30"
               >
                 + Create Court
               </button>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
               {isAdmin && (
                 <button
                   onClick={() => setShowCreateCourt(true)}
-                  className="bg-green-500 text-black px-6 py-3 rounded-lg font-bold hover:bg-green-400 transition-all"
+                  className="bg-purple-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-purple-400 transition-all"
                 >
                   Create First Court
                 </button>
@@ -202,7 +202,7 @@ export default function DashboardPage() {
       {/* Create Court Modal */}
       {showCreateCourt && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 border border-green-500 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-green-500/20">
+          <div className="bg-gray-900 border border-purple-500 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-purple-500/20">
             <h3 className="text-2xl font-bold text-white mb-6">Create New Court</h3>
             
             <form onSubmit={handleCreateCourt} className="space-y-6">
@@ -215,7 +215,7 @@ export default function DashboardPage() {
                   value={courtName}
                   onChange={(e) => setCourtName(e.target.value)}
                   placeholder="e.g., Court 1, Center Court"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -231,7 +231,7 @@ export default function DashboardPage() {
                 <button
                   type="submit"
                   disabled={creating}
-                  className="flex-1 bg-green-500 text-black py-3 rounded-lg font-bold hover:bg-green-400 transition-all disabled:opacity-50"
+                  className="flex-1 bg-purple-500 text-white py-3 rounded-lg font-bold hover:bg-purple-400 transition-all disabled:opacity-50"
                 >
                   {creating ? 'Creating...' : 'Create Court'}
                 </button>

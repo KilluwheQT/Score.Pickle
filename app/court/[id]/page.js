@@ -128,17 +128,17 @@ export default function CourtPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="bg-gray-900 border-b border-green-500">
+      <nav className="bg-gray-900 border-b border-purple-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link href="/dashboard" className="flex-shrink-0 flex items-center">
-                <h1 className="text-2xl font-bold text-green-400">🏓 Pickleball Pro</h1>
+                <h1 className="text-2xl font-bold text-purple-400">🏓 Pickleball Pro</h1>
               </Link>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:pt-1">
                 <Link
                   href="/dashboard"
-                  className="text-green-400 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-purple-400 hover:text-purple-300 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Dashboard
                 </Link>
@@ -172,7 +172,7 @@ export default function CourtPage() {
               
               <button
                 onClick={() => setShowCreateMatch(true)}
-                className="bg-green-500 text-black px-8 py-4 rounded-lg font-bold text-lg hover:bg-green-400 transition-all transform hover:scale-105 shadow-lg shadow-green-500/30"
+                className="bg-purple-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-purple-400 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30"
               >
                 Start New Match
               </button>
@@ -184,7 +184,7 @@ export default function CourtPage() {
               <div className="text-center">
                 <h2 className="text-3xl font-bold text-white mb-2">Court {courtId}</h2>
                 <div className="flex justify-center items-center space-x-4">
-                  <div className="bg-green-500 text-black px-4 py-2 rounded-full text-sm font-bold">
+                  <div className="bg-purple-500 text-black px-4 py-2 rounded-full text-sm font-bold">
                     LIVE MATCH
                   </div>
                   {match.winner && (
@@ -196,18 +196,18 @@ export default function CourtPage() {
               </div>
 
               {/* Scoreboard */}
-              <div className="bg-gray-900 border-2 border-green-500 rounded-2xl p-8 shadow-2xl shadow-green-500/20">
+              <div className="bg-gray-900 border-2 border-purple-500 rounded-2xl p-8 shadow-2xl shadow-purple-500/20">
                 <div className="grid grid-cols-3 gap-8 items-center">
                   {/* Team A */}
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-green-400 mb-4">Team A</h3>
+                    <h3 className="text-xl font-bold text-purple-400 mb-4">Team A</h3>
                     <p className="text-2xl font-bold text-white mb-6">{match.teamA.name}</p>
-                    <div className={`text-6xl font-bold ${match.teamA.serving ? 'text-green-400' : 'text-gray-600'} mb-4`}>
+                    <div className={`text-6xl font-bold ${match.teamA.serving ? 'text-purple-400' : 'text-gray-600'} mb-4`}>
                       {match.teamA.score}
+                      {match.teamA.serving && (
+                        <div className="text-purple-400 text-sm font-bold">🏓 SERVING</div>
+                      )}
                     </div>
-                    {match.teamA.serving && (
-                      <div className="text-green-400 text-sm font-bold">🏓 SERVING</div>
-                    )}
                   </div>
 
                   {/* VS */}
@@ -221,10 +221,10 @@ export default function CourtPage() {
                     <p className="text-2xl font-bold text-white mb-6">{match.teamB.name}</p>
                     <div className={`text-6xl font-bold ${match.teamB.serving ? 'text-purple-400' : 'text-gray-600'} mb-4`}>
                       {match.teamB.score}
+                      {match.teamB.serving && (
+                        <div className="text-purple-400 text-sm font-bold">🏓 SERVING</div>
+                      )}
                     </div>
-                    {match.teamB.serving && (
-                      <div className="text-purple-400 text-sm font-bold">🏓 SERVING</div>
-                    )}
                   </div>
                 </div>
 
@@ -240,7 +240,7 @@ export default function CourtPage() {
                         value={inputRefCode}
                         onChange={(e) => setInputRefCode(e.target.value)}
                         placeholder="Enter your referee code"
-                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       />
                     </div>
 
@@ -248,7 +248,7 @@ export default function CourtPage() {
                       <button
                         onClick={() => handleScoreUpdate('teamA')}
                         disabled={updating || !match.teamA.serving}
-                        className="bg-green-500 text-black py-4 rounded-lg font-bold text-lg hover:bg-green-400 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-green-500/30"
+                        className="bg-purple-500 text-white py-4 rounded-lg font-bold text-lg hover:bg-purple-400 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30"
                       >
                         +1 Team A
                       </button>
@@ -279,7 +279,7 @@ export default function CourtPage() {
                     </div>
 
                     {match.teamA.serving && (
-                      <div className="mt-4 text-center text-green-400 text-sm">
+                      <div className="mt-4 text-center text-purple-400 text-sm">
                         Only Team A can score (serving team)
                       </div>
                     )}
@@ -322,7 +322,7 @@ export default function CourtPage() {
           {/* Create Match Modal */}
           {showCreateMatch && (
             <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
-              <div className="bg-gray-900 border border-green-500 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-green-500/20">
+              <div className="bg-gray-900 border border-purple-500 rounded-2xl p-8 w-full max-w-md shadow-2xl shadow-purple-500/20">
                 <h3 className="text-2xl font-bold text-white mb-6">Start New Match</h3>
                 
                 <form onSubmit={handleCreateMatch} className="space-y-6">
@@ -335,7 +335,7 @@ export default function CourtPage() {
                       value={teamA}
                       onChange={(e) => setTeamA(e.target.value)}
                       placeholder="Enter Team A name"
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       required
                     />
                   </div>
@@ -349,7 +349,7 @@ export default function CourtPage() {
                       value={teamB}
                       onChange={(e) => setTeamB(e.target.value)}
                       placeholder="Enter Team B name"
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       required
                     />
                   </div>
@@ -363,7 +363,7 @@ export default function CourtPage() {
                       value={refereeCode}
                       onChange={(e) => setRefereeCode(e.target.value)}
                       placeholder="Enter your referee code"
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       required
                     />
                   </div>
@@ -379,7 +379,7 @@ export default function CourtPage() {
                     <button
                       type="submit"
                       disabled={creating}
-                      className="flex-1 bg-green-500 text-black py-3 rounded-lg font-bold hover:bg-green-400 transition-all disabled:opacity-50"
+                      className="flex-1 bg-purple-500 text-white py-3 rounded-lg font-bold hover:bg-purple-400 transition-all disabled:opacity-50"
                     >
                       {creating ? 'Creating...' : 'Start Match'}
                     </button>

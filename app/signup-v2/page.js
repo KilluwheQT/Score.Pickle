@@ -77,12 +77,12 @@ export default function SignUpPage() {
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-green-400 mb-2">🏓 Pickleball Pro</h1>
+          <h1 className="text-4xl font-bold text-purple-400 mb-2">🏓 Pickleball Pro</h1>
           <p className="text-gray-400">Create your account</p>
         </div>
 
         {/* Sign Up Form */}
-        <div className="bg-gray-900 border border-green-500 rounded-2xl shadow-2xl shadow-green-500/20 p-8">
+        <div className="bg-gray-900 border border-purple-500 rounded-2xl shadow-2xl shadow-purple-500/20 p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Error/Success Messages */}
             {error && (
@@ -109,7 +109,7 @@ export default function SignUpPage() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your full name"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
               />
             </div>
@@ -126,7 +126,7 @@ export default function SignUpPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
               />
             </div>
@@ -143,7 +143,7 @@ export default function SignUpPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Create a password (min. 6 characters)"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
                 minLength={6}
               />
@@ -161,7 +161,7 @@ export default function SignUpPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirm your password"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
                 minLength={6}
               />
@@ -171,7 +171,7 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-500 text-black font-bold py-3 px-6 rounded-lg hover:bg-green-400 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-green-500/30"
+              className="w-full bg-purple-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-400 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30"
             >
               {loading ? 'Creating Account...' : 'Sign Up'}
             </button>
@@ -181,7 +181,7 @@ export default function SignUpPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-400">
               Already have an account?{' '}
-              <Link href="/login" className="text-green-400 hover:text-green-300 font-medium">
+              <Link href="/login" className="text-purple-400 hover:text-purple-300 font-medium">
                 Sign In
               </Link>
             </p>
@@ -190,7 +190,7 @@ export default function SignUpPage() {
 
         {/* Info Box */}
         <div className="mt-6 bg-gray-900 border border-gray-700 rounded-lg p-4">
-          <h3 className="font-semibold text-green-400 mb-2">Account Approval Required</h3>
+          <h3 className="font-semibold text-purple-400 mb-2">Account Approval Required</h3>
           <p className="text-sm text-gray-400">
             After signing up, your account will need to be approved by an administrator before you can access the scoring system. You'll receive a unique referee code once approved.
           </p>

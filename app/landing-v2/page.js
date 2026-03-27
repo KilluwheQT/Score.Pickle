@@ -6,22 +6,22 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="bg-gray-900 border-b border-green-500">
+      <nav className="bg-gray-900 border-b border-purple-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-green-400">🏓 Pickleball Pro</h1>
+              <h1 className="text-2xl font-bold text-purple-400">🏓 Pickleball Pro</h1>
             </div>
             <div className="flex items-center space-x-4">
               <Link
                 href="/login"
-                className="text-green-400 hover:text-green-300 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-purple-400 hover:text-purple-300 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Sign In
               </Link>
               <Link
                 href="/signup"
-                className="bg-green-500 text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-green-400"
+                className="bg-purple-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-purple-400"
               >
                 Sign Up
               </Link>
@@ -33,7 +33,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-5xl font-bold text-green-400 mb-6">
+          <h1 className="text-5xl font-bold text-purple-400 mb-6">
             Professional Pickleball Scoring
           </h1>
           <p className="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
@@ -43,7 +43,7 @@ export default function LandingPage() {
           <div className="flex justify-center space-x-4">
             <Link
               href="/signup"
-              className="bg-green-500 text-black px-8 py-3 rounded-lg font-medium hover:bg-green-400 transition-all transform hover:scale-105 shadow-lg shadow-green-500/30"
+              className="bg-purple-500 text-white px-8 py-3 rounded-lg font-medium hover:bg-purple-400 transition-all transform hover:scale-105 shadow-lg shadow-purple-500/30"
             >
               Get Started
             </Link>
