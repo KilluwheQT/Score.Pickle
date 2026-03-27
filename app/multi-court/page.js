@@ -218,7 +218,6 @@ export default function MultiCourtPage() {
               </div>
             </div>
 
-            {/* Score Display */}
             {court.match ? (
               <div className="space-y-3">
                 {/* Team Names */}
@@ -296,7 +295,8 @@ export default function MultiCourtPage() {
           >
             View History
           </button>
-            }}
+          <button
+            onClick={() => window.open(`/multi-court/obs/${courts.map(c => c.matchId || 'EMPTY').join(',')}`, '_blank')}
             className="px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
           >
             OBS View
